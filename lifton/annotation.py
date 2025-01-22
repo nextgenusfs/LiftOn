@@ -71,7 +71,7 @@ class Annotation:
             feature_db = gffutils.create_db(
                 self.file_name,
                 self.file_name + "_db",
-                merge_strategy="warning",
+                merge_strategy=self.merge_strategy,
                 id_spec=self.id_spec,
                 force=True,
                 verbose=True,
