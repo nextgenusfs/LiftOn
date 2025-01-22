@@ -362,6 +362,7 @@ def get_ref_liffover_features(features, ref_db, intermediate_dir, args):
             feature = lifton_class.Lifton_feature(locus.id)
             # Write out reference gene features IDs
             # Decide if its type
+            # below doesn't make any sense, if it has CDS then its protein coding...
             gene_type_key = ""
             if args.annotation_database.upper() == "REFSEQ":
                 gene_type_key = "gene_biotype"
@@ -371,24 +372,19 @@ def get_ref_liffover_features(features, ref_db, intermediate_dir, args):
                 or args.annotation_database.upper() == "CHESS"
             ):
                 gene_type_key = "gene_type"
-
-            if gene_type_key in locus.attributes.keys():
-                if (
-                    locus.attributes[gene_type_key][0] == "protein_coding"
-                    and len(CDS_children) > 0
-                ):
-                    feature.is_protein_coding = True
-                    fw_gene.write(f"{locus.id}\tcoding\n")
-                elif (
-                    locus.attributes[gene_type_key][0] == "lncRNA"
-                    or locus.attributes[gene_type_key][0] == "ncRNA"
-                ):
-                    feature.is_non_coding = True
-                    fw_gene.write(f"{locus.id}\tnon-coding\n")
+            if len(CDS_children) > 0:
+                feature.is_protein_coding = True
+                fw_gene.write(f"{locus.id}\tcoding\n")
+            else:
+                if gene_type_key in locus.attributes.keys():
+                    if "RNA" in locus.attributes[gene_type_key][0]:
+                        feature.is_non_coding = True
+                        fw_gene.write(f"{locus.id}\tnon-coding\n")
+                    else:
+                        fw_gene.write(f"{locus.id}\tother\n")
                 else:
                     fw_gene.write(f"{locus.id}\tother\n")
-            else:
-                fw_gene.write(f"{locus.id}\tother\n")
+
             exon_children = list(
                 ref_db.db_connection.children(
                     locus, featuretype="exon", level=1, order_by="start"
