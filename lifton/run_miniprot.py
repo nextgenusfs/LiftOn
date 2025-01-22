@@ -56,6 +56,7 @@ def run_miniprot(outdir, args, tgt_genome, ref_proteins_file):
     except:
         print("failed to run miniprot")
         sys.exit(1)
+    print("miniprot completed successfully")
     return miniprot_output
 
 

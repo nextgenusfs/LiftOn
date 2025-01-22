@@ -1,7 +1,16 @@
 import sys
 from lifton import logger
 
-def print_report(ref_features_dict, transcripts_stats_dict, fw_unmapped, fw_extra_copy, fw_mapped_feature, fw_mapped_trans, debug=False):
+
+def print_report(
+    ref_features_dict,
+    transcripts_stats_dict,
+    fw_unmapped,
+    fw_extra_copy,
+    fw_mapped_feature,
+    fw_mapped_trans,
+    debug=False,
+):
     """
     This function prints the report of the lifton results.
 
@@ -24,7 +33,7 @@ def print_report(ref_features_dict, transcripts_stats_dict, fw_unmapped, fw_extr
     LIFTED_EXTRA_CODING_SUM_FEATURES = 0
     LIFTED_EXTRA_NONCODING_SUM_FEATURES = 0
     LIFTED_EXTRA_OTHER_SUM_FEATURES = 0
-    
+
     # Feature stats (gene)
     for feature in ref_features_dict.keys():
         if feature == "LiftOn-gene":
@@ -68,27 +77,63 @@ def print_report(ref_features_dict, transcripts_stats_dict, fw_unmapped, fw_extr
                 TYPE = "other"
             fw_unmapped.write(f"{feature}\t{TYPE}\n")
 
-    # Transcript stats        
+    # Transcript stats
     for TYPE, transs in transcripts_stats_dict.items():
         for trans, trans_copy_num in transs.items():
             fw_mapped_trans.write(f"{trans}\t{trans_copy_num}\t{TYPE}\n")
 
     print("\n\n*********************************************", file=sys.stderr)
-    print(f"* Total features in reference\t\t: {len(ref_features_dict.keys())-1}", file=sys.stderr)
-    print(f"* Lifted feature\t\t\t: {LIFTED_FEATURES} ({LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_FEATURES} + {LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_FEATURES} + {LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_FEATURES})", file=sys.stderr)
-    print(f"\t* Protein-coding feature\t: {LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_FEATURES}", file=sys.stderr)
-    print(f"\t* Non-coding feature\t\t: {LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_FEATURES}", file=sys.stderr)
-    print(f"\t* Other feature\t\t\t: {LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_FEATURES}", file=sys.stderr)
+    print(
+        f"* Total features in reference\t\t: {len(ref_features_dict.keys())-1}",
+        file=sys.stderr,
+    )
+    print(
+        f"* Lifted feature\t\t\t: {LIFTED_FEATURES} ({LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_FEATURES} + {LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_FEATURES} + {LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_FEATURES})",
+        file=sys.stderr,
+    )
+    print(
+        f"\t* Protein-coding feature\t: {LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_FEATURES}",
+        file=sys.stderr,
+    )
+    print(
+        f"\t* Non-coding feature\t\t: {LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_FEATURES}",
+        file=sys.stderr,
+    )
+    print(
+        f"\t* Other feature\t\t\t: {LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_FEATURES}",
+        file=sys.stderr,
+    )
     print(f"* Missed feature\t\t\t: {MISSED_FEATURES}\n", file=sys.stderr)
 
-    print(f"* Total features in target\t\t: {LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_SUM_FEATURES + LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_SUM_FEATURES + LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_SUM_FEATURES} ({LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_SUM_FEATURES} + {LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_SUM_FEATURES} + {LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_SUM_FEATURES})", file=sys.stderr)
-    print(f"\t* Protein-coding feature\t: {LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_SUM_FEATURES} ({LIFTED_SINGLE_CODING_FEATURES} + {LIFTED_EXTRA_CODING_SUM_FEATURES})", file=sys.stderr)
+    print(
+        f"* Total features in target\t\t: {LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_SUM_FEATURES + LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_SUM_FEATURES + LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_SUM_FEATURES} ({LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_SUM_FEATURES} + {LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_SUM_FEATURES} + {LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_SUM_FEATURES})",
+        file=sys.stderr,
+    )
+    print(
+        f"\t* Protein-coding feature\t: {LIFTED_SINGLE_CODING_FEATURES + LIFTED_EXTRA_CODING_SUM_FEATURES} ({LIFTED_SINGLE_CODING_FEATURES} + {LIFTED_EXTRA_CODING_SUM_FEATURES})",
+        file=sys.stderr,
+    )
     print(f"\t\t* single copy\t\t: {LIFTED_SINGLE_CODING_FEATURES}", file=sys.stderr)
-    print(f"\t\t* > 1 copy\t\t: {LIFTED_EXTRA_CODING_FEATURES}, {LIFTED_EXTRA_CODING_SUM_FEATURES} in total", file=sys.stderr)
-    print(f"\t* Non-coding feature\t\t: {LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_SUM_FEATURES} ({LIFTED_SINGLE_NONCODING_FEATURES} + {LIFTED_EXTRA_NONCODING_SUM_FEATURES})", file=sys.stderr)
+    print(
+        f"\t\t* > 1 copy\t\t: {LIFTED_EXTRA_CODING_FEATURES}, {LIFTED_EXTRA_CODING_SUM_FEATURES} in total",
+        file=sys.stderr,
+    )
+    print(
+        f"\t* Non-coding feature\t\t: {LIFTED_SINGLE_NONCODING_FEATURES + LIFTED_EXTRA_NONCODING_SUM_FEATURES} ({LIFTED_SINGLE_NONCODING_FEATURES} + {LIFTED_EXTRA_NONCODING_SUM_FEATURES})",
+        file=sys.stderr,
+    )
     print(f"\t\t* single copy\t\t: {LIFTED_SINGLE_NONCODING_FEATURES}", file=sys.stderr)
-    print(f"\t\t* > 1 copy\t\t: {LIFTED_EXTRA_NONCODING_FEATURES}, {LIFTED_EXTRA_NONCODING_SUM_FEATURES} in total", file=sys.stderr)
-    print(f"\t* Other feature\t\t\t: {LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_SUM_FEATURES} ({LIFTED_SINGLE_OTHER_FEATURES} + {LIFTED_EXTRA_OTHER_SUM_FEATURES})", file=sys.stderr)
+    print(
+        f"\t\t* > 1 copy\t\t: {LIFTED_EXTRA_NONCODING_FEATURES}, {LIFTED_EXTRA_NONCODING_SUM_FEATURES} in total",
+        file=sys.stderr,
+    )
+    print(
+        f"\t* Other feature\t\t\t: {LIFTED_SINGLE_OTHER_FEATURES + LIFTED_EXTRA_OTHER_SUM_FEATURES} ({LIFTED_SINGLE_OTHER_FEATURES} + {LIFTED_EXTRA_OTHER_SUM_FEATURES})",
+        file=sys.stderr,
+    )
     print(f"\t\t* single copy\t\t: {LIFTED_SINGLE_OTHER_FEATURES}", file=sys.stderr)
-    print(f"\t\t* > 1 copy\t\t: {LIFTED_EXTRA_OTHER_FEATURES}, {LIFTED_EXTRA_OTHER_SUM_FEATURES} in total", file=sys.stderr)
+    print(
+        f"\t\t* > 1 copy\t\t: {LIFTED_EXTRA_OTHER_FEATURES}, {LIFTED_EXTRA_OTHER_SUM_FEATURES} in total",
+        file=sys.stderr,
+    )
     print(f"*********************************************")

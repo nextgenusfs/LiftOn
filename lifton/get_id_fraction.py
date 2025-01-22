@@ -6,14 +6,14 @@ def get_partial_id_fraction(reference, target, start, end):
     target = target.upper()
     gaps_in_ref = 0
     for i, letter in enumerate(reference[start:end]):
-        if letter == '-':
+        if letter == "-":
             gaps_in_ref += 1
-        if letter == target[i+start]:
+        if letter == target[i + start]:
             matches += 1
-        if target[i+start] == "*":
+        if target[i + start] == "*":
             break
     # Modify the region length by considering gaps in the reference (as long as it's a open reading frame)
-    total_length = (end-start) - gaps_in_ref
+    total_length = (end - start) - gaps_in_ref
     if total_length == 0:
         return matches, 1
     return matches, total_length
@@ -27,16 +27,16 @@ def get_AA_id_fraction(reference, target):
     target = target.upper()
     gaps_in_ref = 0
     for i, letter in enumerate(reference):
-        if letter == '-':
+        if letter == "-":
             gaps_in_ref += 1
         if letter == target[i]:
             matches += 1
         if target[i] == "*":
-            break        
-    if max(len(reference), len(target)) == 0:  
+            break
+    if max(len(reference), len(target)) == 0:
         return matches, 1
     # Modify the region length by considering gaps in the reference (as long as it's a open reading frame)
-    total_length = max(len(reference), len(target)) - gaps_in_ref    
+    total_length = max(len(reference), len(target)) - gaps_in_ref
     return matches, total_length
 
 
@@ -48,6 +48,6 @@ def get_DNA_id_fraction(reference, target):
     for i, letter in enumerate(reference):
         if letter == target[i]:
             matches += 1
-    if max(len(reference), len(target)) == 0:  
+    if max(len(reference), len(target)) == 0:
         return matches, 1
     return matches, max(len(reference), len(target))
