@@ -225,7 +225,7 @@ def LiftOn_eval_alignment(
     eval_aln = align.lifton_parasail_align(
         eval_trans, locus, tgt_fai, ref_proteins, ref_trans_id
     )
-    if eval_aln != None:
+    if eval_aln is not None:
         lifton_status.lifton_aa = eval_aln.identity
     return eval_aln
 
@@ -236,7 +236,7 @@ def LiftOn_liftoff_alignment(
     liftoff_aln = align.lifton_parasail_align(
         lifton_trans, locus, tgt_fai, ref_proteins, ref_trans_id
     )
-    if liftoff_aln != None:
+    if liftoff_aln is not None:
         lifton_status.liftoff = liftoff_aln.identity
     return liftoff_aln
 
@@ -327,7 +327,7 @@ def LiftOn_miniprot_alignment(
                 miniprot_trans, m_entry, fai, ref_proteins, ref_trans_id
             )
             if (
-                m_lifton_aln == None
+                m_lifton_aln is None
                 or tmp_m_lifton_aln.identity > lifton_status.miniprot
             ):
                 m_lifton_aln = tmp_m_lifton_aln
@@ -461,7 +461,7 @@ def get_ref_liffover_features(features, ref_db, intermediate_dir, args):
 
 
 def __process_ref_liffover_features(locus, ref_db, feature):
-    if feature != None:
+    if feature is not None:
         feature.children.add(locus.id)
 
 
