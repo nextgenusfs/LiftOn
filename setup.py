@@ -17,7 +17,7 @@ setuptools.setup(
         "parasail>=1.2.4",
         "intervaltree>=3.1.0",
         "interlap>=0.2.6",
-        "networkx>=3.3",
+        "networkx>=3",
         "pyfaidx>=0.5.8",
         "pysam>=0.19.1",
         "gffutils>=0.10.1",
