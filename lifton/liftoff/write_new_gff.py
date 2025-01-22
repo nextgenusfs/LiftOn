@@ -113,6 +113,7 @@ def make_gff_line(attr_dict, feature):
             "ID=" + attr_dict["ID"][0] + ";"
         )  # make ID the first printed attribute
     except:
+        print(f"Help, no ID found for\n{feature}\n{attr_dict}")
         attributes_str = ""
     for attr in attr_dict:
         if attr != "copy_id":
