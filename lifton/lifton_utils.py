@@ -421,12 +421,7 @@ def get_ref_liffover_features(features, ref_db, intermediate_dir, args):
                     # Write out reference trans feature IDs
                     if feature.is_protein_coding and transcript.featuretype == "mRNA":
                         fw_trans.write(f"{transcript.id}\tcoding\n")
-                    elif feature.is_non_coding and (
-                        transcript.featuretype == "ncRNA"
-                        or transcript.featuretype == "nc_RNA"
-                        or transcript.featuretype == "lncRNA"
-                        or transcript.featuretype == "lnc_RNA"
-                    ):
+                    elif feature.is_non_coding:
                         fw_trans.write(f"{transcript.id}\tnon-coding\n")
                     else:
                         fw_trans.write(f"{transcript.id}\tother\n")
