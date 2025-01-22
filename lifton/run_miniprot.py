@@ -40,21 +40,24 @@ def run_miniprot(outdir, args, tgt_genome, ref_proteins_file):
     miniprot_outdir = outdir + "miniprot/"
     os.makedirs(miniprot_outdir, exist_ok=True)
     miniprot_output = miniprot_outdir + "miniprot.gff3"
-    miniprot_path = "miniprot"
-    print("args.mp_options: ", args.mp_options)
-    command = [
-        miniprot_path,
-        "--gff-only",
-        tgt_genome,
-        ref_proteins_file,
-    ] + args.mp_options.split(" ")
-    print(f"miniprot cmd: {' '.join(command)}")
-    with open(miniprot_output, "w") as fw:
-        subprocess.call(command, stdout=fw)
     if not os.path.isfile(miniprot_output):
-        print("failed to run miniprot")
-        raise SystemExit(1)
-    print(f"miniprot completed successfully: {miniprot_output}")
+        miniprot_path = "miniprot"
+        print("args.mp_options: ", args.mp_options)
+        command = [
+            miniprot_path,
+            "--gff-only",
+            tgt_genome,
+            ref_proteins_file,
+        ] + args.mp_options.split(" ")
+        print(f"miniprot cmd: {' '.join(command)}")
+        with open(miniprot_output, "w") as fw:
+            subprocess.call(command, stdout=fw)
+        if not os.path.isfile(miniprot_output):
+            print("failed to run miniprot")
+            raise SystemExit(1)
+        print(f"miniprot completed successfully: {miniprot_output}")
+    else:
+        print("miniprot alignment already exists, reusing")
     return miniprot_output
 
 
