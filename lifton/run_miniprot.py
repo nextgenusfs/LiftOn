@@ -48,13 +48,12 @@ def run_miniprot(outdir, args, tgt_genome, ref_proteins_file):
         tgt_genome,
         ref_proteins_file,
     ] + args.mp_options.split(" ")
-    print("miniprot: ", " ".join(command))
-    try:
-        with open(miniprot_output, "w") as fw:
-            subprocess.call(command, stdout=fw)
-    except:
+    print(f"miniprot cmd: {' '.join(command)}")
+    with open(miniprot_output, "w") as fw:
+        subprocess.call(command, stdout=fw)
+    if not os.path.isfile(miniprot_output):
         print("failed to run miniprot")
-        sys.exit(1)
+        raise SystemExit(1)
     print(f"miniprot completed successfully: {miniprot_output}")
     return miniprot_output
 
